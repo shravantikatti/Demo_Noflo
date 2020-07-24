@@ -1,0 +1,52 @@
+{
+  "properties": {
+	"environment" : {
+		"type": "noflo-browser"
+	}
+  },	
+  "inports": {},
+  "outports": {},
+  "groups": [],
+  "processes": {
+  
+    "ReadCSV": {
+      "component": "readCsv"
+    },
+    "ProcessCsv": {
+      "component": "processCsv"
+    },
+    "Display": {
+      "component": "core/Output"
+    }
+  },
+  "connections": [
+    {
+      "src": {
+        "process": "ReadCSV",
+        "port": "out"
+      },
+      "tgt": {
+        "process": "ProcessCsv",
+        "port": "in"
+      }
+    },
+    {
+      "src": {
+        "process": "ProcessCsv",
+        "port": "out"
+      },
+      "tgt": {
+        "process": "Display",
+        "port": "in"
+      }
+    },
+    {
+      "data":"census_data.csv",
+      "tgt":{
+        "process":"ReadCSV",
+        "port":"in"
+      }
+    }
+  ],
+  "caseSensitive": false
+}

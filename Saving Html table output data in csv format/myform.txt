@@ -1,0 +1,85 @@
+
+<!doctype html>
+<html>
+<head>
+<title>Export HTML table to csv</title>
+<style>
+*{
+	color:#2b2b2b;
+	font-family: "Roboto Condensed"
+}
+table{ width:40%; }
+th{ text-align: left; color: "powder blue"; }
+tbody > tr: nth-of-type{even}{background-color:#daeaff; } 
+button{ cursor: pointer; }
+</style>
+<script>
+	function downloadCSV(csv, filename) {
+    var csvFile;
+    var downloadLink;
+
+    // CSV file
+    csvFile = new Blob([csv], {type: "text/csv"});
+
+    // Download link
+    downloadLink = document.createElement("a");
+
+    // File name
+    downloadLink.download = filename;
+
+    // Create a link to the file
+    downloadLink.href = window.URL.createObjectURL(csvFile);
+
+    // Hide download link
+    downloadLink.style.display = "none";
+
+    // Add the link to DOM
+    document.body.appendChild(downloadLink);
+
+    // Click download link
+    downloadLink.click();
+}
+	function exportTableToCSV(filename) {
+    var csv = [];
+    var rows = document.querySelectorAll("table tr");
+    
+    for (var i = 0; i < rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll("td, th");
+        
+        for (var j = 0; j < cols.length; j++) 
+            row.push(cols[j].innerText);
+        
+        csv.push(row.join(","));        
+    }
+
+    // Download CSV file
+    downloadCSV(csv.join("\n"), filename);
+}
+</script>
+</head>
+<body>
+	<table>
+		<tr>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Country</th>
+		</tr>
+		<tr>
+			<td>Johnson</td>
+			<td>john32@gmail.com</td>
+			<td>America</td>
+		</tr>
+		<tr>
+			<td>Krish</td>
+			<td>Krish432@gmail.com</td>
+			<td>Canada</td>
+		</tr>
+		<tr>
+			<td>Rohan</td>
+			<td>Rohan321@gmail.com</td>
+			<td>India</td>
+		</tr>
+	</table>
+	<button onclick="exportTableToCSV('members.csv')">Export HTML Table To CSV File</button>
+</body>
+</html>
